@@ -6,4 +6,4 @@ Currently a work in progress. Output is in `svpkdx.json`. Will work on a `.csv` 
 
 ## Development
 
-`npx playwright test "index.spec.ts"` to run the main test
+`npx playwright test "index.spec.ts"` to run the main file
