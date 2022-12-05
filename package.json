@@ -1,0 +1,16 @@
+{
+  "name": "pkdb-violet",
+  "version": "1.0.0",
+  "description": "web scraper for pokemon violet data",
+  "main": "src/index.spec.ts",
+  "scripts": {},
+  "author": "Forfold",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "playwright": "1.28.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.28.1"
+  }
+}
