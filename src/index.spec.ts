@@ -43,7 +43,7 @@ test('get pokemon sv dex', async ({ page }) => {
       name,
     }
 
-    fs.writeFileSync('svpkdx.json', JSON.stringify(pokedex))
+    fs.writeFileSync('svpkdx.json', JSON.stringify(pokedex, null, 2))
 
     await page.goBack()
   }
