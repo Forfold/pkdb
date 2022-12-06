@@ -72,9 +72,14 @@ test('get pokemon sv dex', async ({ page }) => {
     'div[class="infocard-list infocard-list-pkmn-lg"] div',
   )
 
-  let pokedex: Pokedex = {}
+  let dex: Pokedex = {}
   const count = await listContainer.count()
   console.log('Total number of Pokemon to index: ', count)
+
+  fs.writeFileSync(
+    'svpkdx.csv',
+    'name, total_stats, hp,hp_min,hp_max, atk,atk_min,atk_max, def,def_min,def_max, spa,spa_min,spa_max, spd,spd_min,spd_max, spe,spe_min,spe_max\n',
+  )
 
   for (let i = 0; i < count; i++) {
     await listContainer.nth(i).click()
@@ -92,9 +97,9 @@ test('get pokemon sv dex', async ({ page }) => {
     for (let j = 0; j < numTypes; j++) {
       let n = `${name}${j > 0 ? ` (Alternate Version ${j})` : ''}`
 
-      console.log(i + 1, ': ', n)
+      console.log(i + 1, n)
 
-      pokedex[n] = {
+      dex[n] = {
         name: n,
         stats: {
           total: (await getRowVals('Total', j))[0],
@@ -106,9 +111,16 @@ test('get pokemon sv dex', async ({ page }) => {
           speed: await getStat('Speed', j),
         },
       }
+
+      // append to csv
+      fs.appendFileSync(
+        'svpkdx.csv',
+        `${n}, ${dex[n].stats?.total}, ${dex[n].stats?.hp.avg}, ${dex[n].stats?.hp.min}, ${dex[n].stats?.hp.max}, ${dex[n].stats?.attack.avg}, ${dex[n].stats?.attack.min}, ${dex[n].stats?.attack.max}, ${dex[n].stats?.defense.avg}, ${dex[n].stats?.defense.min}, ${dex[n].stats?.defense.max}, ${dex[n].stats?.specialAttack.avg}, ${dex[n].stats?.specialAttack.min}, ${dex[n].stats?.specialAttack.max}, ${dex[n].stats?.specialDefense.avg}, ${dex[n].stats?.specialDefense.min}, ${dex[n].stats?.specialDefense.max}, ${dex[n].stats?.speed.avg}, ${dex[n].stats?.speed.min}, ${dex[n].stats?.speed.max}\n`,
+      )
     }
 
-    fs.writeFileSync('svpkdx.json', JSON.stringify(pokedex, null, 2))
+    // write to json
+    // fs.writeFileSync('svpkdx.json', JSON.stringify(dex, null, 2))
 
     await page.goBack()
   }
