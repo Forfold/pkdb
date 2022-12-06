@@ -84,7 +84,7 @@ test('get pokemon sv dex', async ({ page }) => {
   for (let i = 0; i < count; i++) {
     await listContainer.nth(i).click()
 
-    let name = (await page.locator('h1').textContent()) || ''
+    const name = (await page.locator('h1').textContent()) || ''
 
     // check if more than 1 type of this pokemon exists
     const numTypes = await page
@@ -120,7 +120,7 @@ test('get pokemon sv dex', async ({ page }) => {
     }
 
     // write to json
-    // fs.writeFileSync('svpkdx.json', JSON.stringify(dex, null, 2))
+    fs.writeFileSync('svpkdx.json', JSON.stringify(dex, null, 2))
 
     await page.goBack()
   }
